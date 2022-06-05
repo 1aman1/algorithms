@@ -5,7 +5,7 @@
 RECURSIVE IMPLEMENTATION
 */
 
-int binarySearch(std::vector<int> arr, int left, int right, int searchElement)
+int binarySearch(const std::vector<int> &arr, int left, int right, const int &searchElement)
 {
   if (right >= left)
   {
