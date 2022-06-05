@@ -50,14 +50,14 @@ int main()
 {
     Solution obj;
 
-/*
+    /*
 
-    obj.insert(5);
-    obj.insert(4);
-    obj.insert(3);
-    obj.insert(2);
-    obj.insert(1);
-*/
+        obj.insert(5);
+        obj.insert(4);
+        obj.insert(3);
+        obj.insert(2);
+        obj.insert(1);
+    */
 
     obj.insert(1);
     obj.insert(2);
