@@ -4,17 +4,21 @@
 
 class debugUtil
 {
-    bool log;
+    bool DEBUGLOG;
 
 public:
-    debugUtil(){};
+    debugUtil(){
+        // no object needed for this class
+    };
+
     void setDebugTrue()
     {
-        log = true;
+        DEBUGLOG = true;
     }
+
     bool ifDEBUGLOG()
     {
-        return log;
+        return DEBUGLOG;
     }
 };
 
@@ -27,9 +31,6 @@ private:
 public:
     void initArray();
     void print();
-
-    // implement method for ascending order
-    void bubble_sort();
 
 private:
     std::vector<int> array;
@@ -47,49 +48,25 @@ void Solution::initArray()
 
 void Solution::print()
 {
+    ifDEBUGLOG() == true ? std::cout << "BUILDING MaxHeap ON :" << std::endl : std::cout << "";
+
     for (auto i : array)
         std::cout << i << " ";
     std::cout << std::endl;
 }
 
-/*
-Bubble Sort
-*/
-
-void Solution::bubble_sort()
-{
-    for (int i = 0; i < array.size() - 1; ++i)
-    {
-        for (int j = 0; j < array.size() - 1 - i; ++j)
-        {
-            if (array[j] < array[j + 1])
-                continue;
-            else
-            { // swap
-                array[j] = array[j] ^ array[j + 1];
-                array[j + 1] = array[j] ^ array[j + 1];
-                array[j] = array[j] ^ array[j + 1];
-            }
-        }
-    }
-}
-
 int main(int argc, char **argv)
 {
     Solution obj;
+    obj.initArray();
 
     if (argc == 2)
     {
-        std::string opt = static_cast<std::string>(*(argv + 1));
-        if (opt == "true")
+        if ("true" == static_cast<std::string>(*(argv + 1)))
             obj.setDebugTrue();
     }
 
-    obj.initArray();
     obj.print();
 
-    obj.bubble_sort();
     obj.print();
-
-    return 0;
 }

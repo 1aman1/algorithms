@@ -1,19 +1,50 @@
 #include <iostream>
 #include <vector>
+#include <ctime>
 
-class Solution
+class debugUtil
 {
-private:
-    std::vector<int> array;
+    bool log;
 
 public:
-    bool insert(int v);
+    debugUtil(){};
 
+    void setDebugTrue()
+    {
+        log = true;
+    }
+    bool ifDEBUGLOG()
+    {
+        return log;
+    }
+};
+
+class Solution : public debugUtil
+{
+private:
+    int RangeForRandom = 99;
+    int SequenceSize = 10;
+
+public:
+    void initArray();
     void print();
 
     // implement method for ascending order
     void bubble_sort();
+
+private:
+    std::vector<int> array;
 };
+
+void Solution::initArray()
+{
+    srand(time(nullptr));
+
+    for (int i = 0; i < SequenceSize; i++)
+    {
+        array.push_back(rand() % RangeForRandom);
+    }
+}
 
 void Solution::print()
 {
@@ -22,11 +53,9 @@ void Solution::print()
     std::cout << std::endl;
 }
 
-bool Solution::insert(int v)
-{
-    array.push_back(v);
-    return true;
-}
+/*
+Bubble Sort
+*/
 
 void Solution::bubble_sort()
 { // use flag for previous swap, if any
@@ -51,28 +80,19 @@ void Solution::bubble_sort()
     }
 }
 
-int main()
+int main(int argc, char **argv)
 {
     Solution obj;
-    /*
 
-        obj.insert(5);
-        obj.insert(4);
-        obj.insert(3);
-        obj.insert(2);
-        obj.insert(1);
-    */
+    if (argc == 2)
+    {
+        std::string opt = static_cast<std::string>(*(argv + 1));
+        if (opt == "true")
+            obj.setDebugTrue();
+    }
 
-    obj.insert(1);
-    obj.insert(2);
-    obj.insert(3);
-    obj.insert(4);
-    obj.insert(5);
-
+    obj.initArray();
     obj.print();
 
-    obj.bubble_sort();
     obj.print();
-
-    return 0;
 }

@@ -13,16 +13,7 @@ private:
 public:
     int getArraySize();
     bool insert(int v);
-    void initArray()
-    {
-        srand(time(nullptr));
-
-        for (int i = 0; i < SIZE; i++)
-        {
-            // increase range for larger numbers
-            array.push_back(rand() % RANGE);
-        }
-    }
+    void initArray();
 
     void print();
 
@@ -32,6 +23,17 @@ public:
     void merge(int, int, int);
 };
 
+void Solution::initArray()
+{
+    srand(time(nullptr));
+
+    for (int i = 0; i < SIZE; i++)
+    {
+        // increase range for larger numbers
+        array.push_back(rand() % RANGE);
+    }
+}
+
 int Solution::getArraySize()
 {
     return array.size();
@@ -39,16 +41,17 @@ int Solution::getArraySize()
 
 void Solution::merge(int left, int middle, int right)
 {
+    // calculate the lengths, copy the corresponding elements into temp arrays
+
+    // Once for LEFT
     int leftArraySize = middle - left + 1;
-    int rightArraySize = right - middle;
-
-    int *leftTEMPArray = new int[leftArraySize];
-    int *rightTEMPArray = new int[rightArraySize];
-
-    // copy the stretch into temporary arrays
-    // left n right
+    std::vector<int> leftTEMPArray(leftArraySize);
     for (int i = 0; i < leftArraySize; ++i)
         leftTEMPArray[i] = array[left + i];
+
+    // and RIGHT
+    int rightArraySize = right - middle;
+    std::vector<int> rightTEMPArray(rightArraySize);
     for (int i = 0; i < rightArraySize; ++i)
         rightTEMPArray[i] = array[middle + i + 1];
 
@@ -74,7 +77,8 @@ void Solution::merge(int left, int middle, int right)
         ++offset_for_sorted_array;
     }
 
-    // so far elements were inserted for lesser lengths array
+    // so far we sorted elements till lesserArray.length()
+
     // remaining we need to manually insert.
     // one time for left array
     while (offset_for_left_array < leftArraySize)
@@ -84,7 +88,7 @@ void Solution::merge(int left, int middle, int right)
         ++offset_for_sorted_array;
     }
 
-    // one time for right array
+    // one for right
     while (offset_for_right_array < rightArraySize)
     {
         array[offset_for_sorted_array] = rightTEMPArray[offset_for_right_array];

@@ -8,6 +8,7 @@ class debugUtil
 
 public:
     debugUtil(){};
+    
     void setDebugTrue()
     {
         log = true;
@@ -28,8 +29,7 @@ public:
     void initArray();
     void print();
 
-    // implement method for ascending order
-    void bubble_sort();
+    void selectionSort();
 
 private:
     std::vector<int> array;
@@ -53,26 +53,28 @@ void Solution::print()
 }
 
 /*
-Bubble Sort
+selectionSort
 */
 
-void Solution::bubble_sort()
+void Solution::selectionSort()
 {
-    for (int i = 0; i < array.size() - 1; ++i)
+    for (int i = 0; i < array.size(); ++i)
     {
-        for (int j = 0; j < array.size() - 1 - i; ++j)
+        int minValueIndex = i;
+        for (int j = i + 1; j < array.size(); ++j)
+        { // traverse the array ahead of i, to find relatively smaller element
+            if (array[j] < array[minValueIndex])
+                minValueIndex = j;
+        }
+        if (minValueIndex != i) // it was set before this loop
         {
-            if (array[j] < array[j + 1])
-                continue;
-            else
-            { // swap
-                array[j] = array[j] ^ array[j + 1];
-                array[j + 1] = array[j] ^ array[j + 1];
-                array[j] = array[j] ^ array[j + 1];
-            }
+            array[i] = array[i] ^ array[minValueIndex];
+            array[minValueIndex] = array[i] ^ array[minValueIndex];
+            array[i] = array[i] ^ array[minValueIndex];
         }
     }
 }
+
 
 int main(int argc, char **argv)
 {
@@ -88,8 +90,7 @@ int main(int argc, char **argv)
     obj.initArray();
     obj.print();
 
-    obj.bubble_sort();
+    obj.selectionSort();
     obj.print();
 
-    return 0;
 }
