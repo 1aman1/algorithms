@@ -87,3 +87,16 @@ where k : range of the input, for ex 1..99 <br />
 > De-merits: 
 * Prepares a frequency counter using some space(k), if the input range is narrow, then the extra space may not be an issue.
 * Not very good for a very large input.
+
+
+## Shell sort ##
+
+___Complexity:- O(n^2), Space(n)___   
+<br />
+
+> merits: 
+* sorts in place.
+* Improves complexity over Insertion sort, by sorting elements on a gap first, reducing those many move operations done to shift element from right to left.
+
+> De-merits: 
+* Doesn't perform good for large inputs.
