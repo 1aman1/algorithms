@@ -73,6 +73,7 @@ void Solution::quicksort(int left, int right)
 
 int Solution::partition(int left, int right)
 {
+    // right most element is pivot
     int pivotValue = array[right];
 
     _ifDEBUGLOG() == true ? std::cout << "pivot " << pivotValue << std::endl : std::cout << "";
