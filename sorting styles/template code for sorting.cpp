@@ -4,12 +4,10 @@
 
 class debugUtil
 {
-    bool DEBUGLOG;
+    bool DEBUGLOG = false;
 
 public:
-    debugUtil(){
-        // no object needed for this class
-    };
+    debugUtil(){};
 
     void setDebugTrue()
     {
