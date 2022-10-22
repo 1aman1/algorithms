@@ -19,7 +19,7 @@ public:
 
     // implement method for ascending order
     //  Merge sort methods
-    void mergeSort(int, int);
+    void merge_sort_partition(int, int);
     void merge(int, int, int);
 };
 
@@ -56,60 +56,44 @@ void Solution::merge(int left, int middle, int right)
         rightTEMPArray[i] = array[middle + i + 1];
 
     // compare both left and right sub arrays, searching for smaller element,
-    // and put the smaller element using offset_for_sorted_array back to array
-    int offset_for_left_array = 0;
-    int offset_for_right_array = 0;
-    int offset_for_sorted_array = left;
+    // and put the smaller element using sorted_array_offset back to array
+    int left_array_offset = 0;
+    int right_array_offset = 0;
+    int sorted_array_offset = left;
 
-    while (offset_for_left_array < leftArraySize && offset_for_right_array < rightArraySize)
+    while (left_array_offset < leftArraySize && right_array_offset < rightArraySize)
     {
-        if (leftTEMPArray[offset_for_left_array] <= rightTEMPArray[offset_for_right_array])
-        {
-            array[offset_for_sorted_array] = leftTEMPArray[offset_for_left_array];
-            ++offset_for_left_array;
-        }
+        if (leftTEMPArray[left_array_offset] <= rightTEMPArray[right_array_offset])
+            array[sorted_array_offset] = leftTEMPArray[left_array_offset++];
         else
-        {
-            array[offset_for_sorted_array] = rightTEMPArray[offset_for_right_array];
-            ++offset_for_right_array;
-        }
+            array[sorted_array_offset] = rightTEMPArray[right_array_offset++];
 
-        ++offset_for_sorted_array;
+        ++sorted_array_offset;
     }
 
-    // so far we sorted elements till lesserArray.length()
-
+    // so far we sorted elements till smallerArray.length()
     // remaining we need to manually insert.
-    // one time for left array
-    while (offset_for_left_array < leftArraySize)
-    {
-        array[offset_for_sorted_array] = leftTEMPArray[offset_for_left_array];
-        ++offset_for_left_array;
-        ++offset_for_sorted_array;
-    }
 
-    // one for right
-    while (offset_for_right_array < rightArraySize)
-    {
-        array[offset_for_sorted_array] = rightTEMPArray[offset_for_right_array];
-        ++offset_for_right_array;
-        ++offset_for_sorted_array;
-    }
+    while (left_array_offset < leftArraySize)
+        array[sorted_array_offset++] = leftTEMPArray[left_array_offset++];
+
+    while (right_array_offset < rightArraySize)
+        array[sorted_array_offset++] = rightTEMPArray[right_array_offset++];
 }
 
-void Solution::mergeSort(int begin, int end)
+void Solution::merge_sort_partition(int left, int right)
 {
     // break recursion
-    if (end <= begin)
+    if (right <= left)
         return;
 
-    int middle = begin + (end - begin) / 2;
+    int middle = left + (right - left) / 2;
 
-    mergeSort(begin, middle);
-    mergeSort(middle + 1, end);
+    merge_sort_partition(left, middle);
+    merge_sort_partition(middle + 1, right);
 
     // merging from here
-    merge(begin, middle, end);
+    merge(left, middle, right);
 }
 
 void Solution::print()
@@ -125,6 +109,6 @@ int main()
     obj.initArray();
 
     obj.print();
-    obj.mergeSort(0, obj.getArraySize() - 1);
+    obj.merge_sort_partition(0, obj.getArraySize() - 1);
     obj.print();
 }
