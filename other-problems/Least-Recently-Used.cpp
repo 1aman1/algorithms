@@ -29,54 +29,51 @@ public:
 
 void LRUCache::put(int key, int value)
 {
-    // std::cout << "\nput: " << key << ":" << value << "\t";
-
     if (cache.count(key))
     {
-        const auto &key_node_itr = cache[key];
-        list.splice(begin(list), list, key_node_itr);
-        key_node_itr->value = value;
+        const auto &cacheItrToKey = cache.at(key);
+        list.splice(begin(list), list, cacheItrToKey);
+        cacheItrToKey->value = value;
         return;
     }
 
-    if (list.size() == capacity)
+    if (capacity == list.size())
     {
-        const auto &LRU_node = list.back();
-        cache.erase(LRU_node.key);
+        const auto &evictNode = list.back();
+        cache.erase(evictNode.key);
         list.pop_back();
     }
 
     list.emplace_front(key, value);
-    cache[key] = begin(list);
+    cache.insert({key, begin(list)});
 }
 
 int LRUCache::get(int key)
 {
-    // std::cout << "\nget: " << key << "\t";
-
     if (!cache.count(key))
         return -1;
 
-    const auto &key_node_itr = cache[key];
-    list.splice(begin(list), list, key_node_itr);
-    return key_node_itr->value;
+    const auto &cacheItrToKey = cache.at(key);
+    list.splice(begin(list), list, cacheItrToKey);
+
+    return list.front().value;
 }
 
 int main()
 {
     LRUCache *lRUCache = new LRUCache(2);
 
-    lRUCache->put(2, 1);
+    lRUCache->put(1, 100);
 
-    lRUCache->put(1, 1);
+    lRUCache->put(2, 100);
 
-    lRUCache->put(2, 3);
+    lRUCache->put(2, 300);
 
-    lRUCache->put(4, 1);
+    lRUCache->put(4, 100);
 
-    std::cout << lRUCache->get(1);
+    std::cout << lRUCache->get(1) << "\n";
 
-    std::cout << lRUCache->get(2);
+    std::cout << lRUCache->get(2) << "\n";
 
     return 0;
 }
